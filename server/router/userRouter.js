@@ -1,10 +1,10 @@
 const express = require('express');
 let router = express.Router()
-const controller = require('../controllers')
+const controller = require('../controllers/userController')
 
-router.post('/user', (req, res) =>{
-    console.log(req)
-    // console.log('hello this is the router')
+router.get('/user', (req, res) =>{
+    res.json({message: 'hello this is the router'})
+    console.log('hello this is the router')
 })
 
 module.exports =

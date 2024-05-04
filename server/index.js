@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-// const dbConnect = require('./db/dbConnect');
+const dbConnect = require('./db/dbConnect');
 const http = require('http'); 
 const bodyParser = require('body-parser');
 const app = express();
