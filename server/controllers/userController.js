@@ -9,7 +9,7 @@ function addUsers(req, res) {
 }
 
 function updateUsers(req, res) {
-    console.log('this is to update a users account/infomation')
+    console.log('this is to update a users account')
 }
 
 module.exports= {

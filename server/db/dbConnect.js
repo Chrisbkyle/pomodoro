@@ -1,38 +1,48 @@
 const mongoose = require('mongoose')
+const uri = 'mongodb://127.0.0.1:27017/pomodoro'
+const user = require('../schema/userSchema.js')
 
-main().catch(err => console.log(err));
+const mongooseOptions = {
+    // useUnifiedTopology: true,
+    // useNewUrlParser: true
+}
 
-
+main().catch(
+    (err) => {
+        console.log(err)
+        process.exit(1)
+    }
+)
 
 async function main() {
     await mongoose.connect(
-        'mongodb://127.0.0.1:27017/test',
+        uri,
+        mongooseOptions,
         console.log('connected')
     )
 }
 
-const kittySchema = new mongoose.Schema({
-    name: String
-});
+const find = user.findById(1)
 
+console.log(find)
+// const userSchema = new mongoose.Schema({
+//     username: String,
+//     password: String,
+//     email: String,
+//     previousToDo: Array
+// })
+// const user = mongoose.model('user', userSchema);
 
-kittySchema.methods.speak = function speak() {
-    const greeting = this.name ? 'Meow name is ' + this.name : 'I don\'t have a name';
-    console.log(greeting);
-};
+// const ringo = new user({
+//     username: 'rStar',
+//     password: 'password',
+//     email: 'octopus\'sGarden@inthe.shade',
+//     previousToDo: ["I'd like to be", "Under the sea", "In an Octopus's garden"]
+// })
 
-const Kitten = mongoose.model('Kitten', kittySchema)
+// async function addUser() {
+//     await ringo.save();
+//     console.log('ringo added')
+// }
 
-const silence = new Kitten({name: 'Silence'});
-console.log(silence.name)
-
-const fluffy = new Kitten({name:'fluffy'});
-
-async function addFluffy() {
-    await fluffy.save();
-    console.log('fluffy added')
-}
-addFluffy().catch(err => console.log(err))
-fluffy.speak();
-
-// fluffy.speak();
+// addUser()
