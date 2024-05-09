@@ -1,19 +1,38 @@
 const Model = require('../schema')
 
+const handleError = (err) => {
+    console.log(err.message, err.code)
+    let error = { email: '', password: ''};
+
+    if (err.message.includes('user validation failed')){
+        console.log(err)
+    }
+}
 
  async function getUsers(req, res) {
-    const request = await req.body.username
-    let user;
-    if(request) {
-        Model.User.find(
-            {username: req.body.username}
-        ).then(e => 
-            res.send(e)
-        ).catch((err) => 
-            res.send(err)
-        )
+
+    let user = await req.body.username
+    let password = await req.body.password
+
+    if(!user)  {
+        res.status(404).send('No User Requested')
+    } else if (!password) {
+        res.status(404).send('No Password Entered')
     } else {
-        res.send('nah')
+        Model.User.findOne(
+            {username: user}
+        ).then(e => {
+            if(!e) {
+                res.status(404).send('User Not Found')
+            } else if(password != e.password) {
+                res.status(400).send('Password not valid')
+            } else {
+                res.send(e)
+            }
+        }).catch((err) => 
+            // res.send(err)
+            handleError(err)
+        )
     }
 }
 
@@ -28,7 +47,8 @@ function addUsers(req, res) {
     ).then(e => 
         res.send('user added')
     ).catch(err => 
-        res.send('user not added'))
+        // res.send(err)
+        handleError(err))
 }
 async function updateUsers(req, res) {
     const editUser = await req.body.username;
@@ -39,7 +59,8 @@ async function updateUsers(req, res) {
     ).then(e => 
         res.send(e)
     ).catch(err => 
-        res.send(err)
+        // res.send(err)
+        handleError(err)
     )
 }
 async function deleteUsers(req, res) {
@@ -47,7 +68,8 @@ async function deleteUsers(req, res) {
     Model.User.deleteOne({username: deleteUser}).then(e => 
         res.send('deleted')
     ).catch(err => 
-        res.send(err)
+        // res.send(err)
+        handleError(err)
     )
 }
 
