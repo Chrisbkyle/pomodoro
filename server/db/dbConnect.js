@@ -21,10 +21,16 @@ async function main() {
         console.log('connected')
     )
 }
+let get = {}
+function insertData() {
+    user.insertMany({username: 'rStar', password: 'password', email: 'octopus\'sGarden@inthe.shade', previousToDo: ['I dont remember enough', 'of the words', 'i shouldve picked paul']})
+}
+// insertData()
+async function findData() {
+    get = await user.find({username: 'rStar'})
+}
+findData().then(e => console.log(get))
 
-const find = user.findById(1)
-
-console.log(find)
 // const userSchema = new mongoose.Schema({
 //     username: String,
 //     password: String,
