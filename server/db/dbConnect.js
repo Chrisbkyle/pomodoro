@@ -21,15 +21,26 @@ async function main() {
         console.log('connected')
     )
 }
-let get = {}
-function insertData() {
-    user.insertMany({username: 'rStar', password: 'password', email: 'octopus\'sGarden@inthe.shade', previousToDo: ['I dont remember enough', 'of the words', 'i shouldve picked paul']})
-}
+// let get = {}
+// function insertData() {
+//     user.insertMany(
+//         [{username: 'pMccartney', 
+//         password: 'password', 
+//         email: 'getBackToWhere@youOnce.belonged', 
+//         previousToDo: ['Jojo was a man', 'who thought he was', 'a loner']},
+//         {username: 'jLennon',
+//         password: 'password',
+//         email: 'strawberry@fields.forever',
+//         previousToDo: ['let me take you down', 'cause we\'re', 'going to']
+//         }]
+    
+//     )
+// }
 // insertData()
-async function findData() {
-    get = await user.find({username: 'rStar'})
-}
-findData().then(e => console.log(get))
+// async function findData() {
+//     get = await user.find()
+// }
+// findData().then(e => console.log(get))
 
 // const userSchema = new mongoose.Schema({
 //     username: String,
