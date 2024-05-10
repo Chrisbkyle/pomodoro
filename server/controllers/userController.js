@@ -1,11 +1,16 @@
 const Model = require('../schema')
 
 const handleError = (err) => {
-    console.log(err.message, err.code)
-    let error = { email: '', password: ''};
+    // console.log(err.message, err.code)
+    let error = { username: '', password: '', email: '', previousToDo: ''};
 
     if (err.message.includes('user validation failed')){
-        console.log(err)
+        // console.log(err.errors.email.properties.message + ' ' + err.errors.password.properties.message)
+        console.log(Object.values(err.errors))
+        Object.values(err.errors).forEach(({properties}) => {
+            error['email']
+        })
+        // console.log(err.message.email + ' ' + err.message.password)
     }
 }
 
