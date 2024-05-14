@@ -63,7 +63,7 @@ function addUsers(req, res) {
     })
     newUser.save(
     ).then(e => 
-        res.send('user added')
+        res.send('Signup Successful')
     ).catch(err => 
         res.send(
             handleError(err))
