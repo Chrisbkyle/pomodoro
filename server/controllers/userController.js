@@ -1,16 +1,27 @@
 const Model = require('../schema')
-
+//handle errors
 const handleError = (err) => {
-    // console.log(err.message, err.code)
-    let error = { username: '', password: '', email: '', previousToDo: ''};
+    console.log(err.message, err.code)
+    let errors = { 
+        // username: '', 
+        // password: '', 
+        // email: '', 
+        // previousToDo: ''
+    };
 
+    //duplicate error code
+    if (err.code === 11000) {
+        errors.username = 'Username already in use'
+        return errors;
+    }
+
+    // validation errors
     if (err.message.includes('user validation failed')){
-        // console.log(err.errors.email.properties.message + ' ' + err.errors.password.properties.message)
-        console.log(Object.values(err.errors))
         Object.values(err.errors).forEach(({properties}) => {
-            error['email']
+            console.log(properties)
+            errors[properties.path] = properties.message;
         })
-        // console.log(err.message.email + ' ' + err.message.password)
+        return errors;
     }
 }
 
@@ -21,25 +32,27 @@ const handleError = (err) => {
 
     if(!user)  {
         res.status(404).send('No User Requested')
-    } else if (!password) {
-        res.status(404).send('No Password Entered')
-    } else {
+    }  else {
         Model.User.findOne(
             {username: user}
         ).then(e => {
             if(!e) {
                 res.status(404).send('User Not Found')
+            } else if (!password) {
+                res.status(404).send('No Password Entered')
             } else if(password != e.password) {
                 res.status(400).send('Password not valid')
             } else {
                 res.send(e)
             }
         }).catch((err) => 
-            // res.send(err)
-            handleError(err)
+            res.send(
+                handleError(err)
+            )
         )
     }
 }
+
 
 function addUsers(req, res) {
     const newUser = new Model.User({
@@ -52,8 +65,9 @@ function addUsers(req, res) {
     ).then(e => 
         res.send('user added')
     ).catch(err => 
-        // res.send(err)
-        handleError(err))
+        res.send(
+            handleError(err))
+        )
 }
 async function updateUsers(req, res) {
     const editUser = await req.body.username;
@@ -64,8 +78,9 @@ async function updateUsers(req, res) {
     ).then(e => 
         res.send(e)
     ).catch(err => 
-        // res.send(err)
-        handleError(err)
+        res.send(
+            handleError(err)
+        )
     )
 }
 async function deleteUsers(req, res) {
@@ -73,8 +88,10 @@ async function deleteUsers(req, res) {
     Model.User.deleteOne({username: deleteUser}).then(e => 
         res.send('deleted')
     ).catch(err => 
-        // res.send(err)
-        handleError(err)
+        res.send(
+            handleError(err)
+        )
+        
     )
 }
 
