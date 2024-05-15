@@ -39,17 +39,16 @@ const userSchema = new Schema({
 
 //fire function after uesr saved to db
 userSchema.post('save', function(doc, next) {
-        console.log('new user was created and saved', doc)
-        next();
-    }
-)
+    console.log('new user was created and saved', doc)
+    next();
+})
 
 //fire a function before doc saved to db
 userSchema.pre('save', async function(next) {
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt)
     console.log('user about to be created and saved', this)
-    next()
+    next();
 })
 
 module.exports = mongoose.model('user', userSchema)
