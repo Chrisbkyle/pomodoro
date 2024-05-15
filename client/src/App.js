@@ -1,4 +1,5 @@
 import './App.css';
+import { PomoProvider } from './components/PomoContext'
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
 import NavContainer from './components/NavContainer';
@@ -13,8 +14,11 @@ import TomatoTimer from './components/TomatoTimer';
 function App() {
   return (
     <div className="App">
-      {/* <SignupForm /> */}
-      <LoginForm />
+      <PomoProvider>
+        {/* <SignupForm /> */}
+        <LoginForm />
+        <ToDoList />
+      </PomoProvider>
     </div>
   );
 }

@@ -1,7 +1,10 @@
 import React, {useState, useEffect} from "react"
 import axios from 'axios'
+import usePomo from "./PomoContext";
 
 const LoginForm = (props) => {
+
+  const {displayUser} = usePomo()
 
   const api = 'http://localhost:3001/api'
   const [loginReq, setLoginReq] = useState({username: '', password: ''})
@@ -18,11 +21,13 @@ const LoginForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post(api + '/user', loginReq)
-    .then(res => { 
+    .then(res => {
+      console.log(res.data)
       setActiveUser(res.data.username)
+      displayUser(res.data)
     }).catch(err => {
-      setErrorMessage(err.response.data)
-      console.log(err.response.data)
+      // setErrorMessage(err.response)
+      console.log(err.response)
     })
   }
 
