@@ -14,7 +14,7 @@ const ToDoList = (props) => {
     setCurrent(currentToDo)
   }, [current])
 
-  console.log(usePomo())
+  // console.log(usePomo())
 
   const handleClick = () => {
     console.log(currentToDo)

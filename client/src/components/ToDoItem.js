@@ -3,7 +3,6 @@ import usePomo from "./PomoContext";
 
 
 const ToDoItem = ({index, task, stage}) => {
-  console.log(task)
 
   const {editTodoItem} = usePomo()
 
@@ -13,8 +12,7 @@ const ToDoItem = ({index, task, stage}) => {
   // console.log(task)
 
   useEffect(() => {
-    // setToDoTask(task)
-  }, [])
+  },[toDoTask])
 
   // const handleEdit = (e) => {
 
@@ -38,17 +36,16 @@ const ToDoItem = ({index, task, stage}) => {
    }
 
   const handleChange = (e) => {
+    console.log('e.target.value ', e.target.value)
     setToDoTask(e.target.value)
-    editTodoItem(index, task, stage)
+
+    editTodoItem(index, e.target.value)
   }
 
   return (
     <div>
       {!edit ? (
-      <div 
-      style={{border: '1px solid black'}} 
-      onClick={e => handleToggle(e)}
-      >{index + 1}. {toDoTask}</div>
+      <div onDoubleClick={e => handleToggle(e)}>{index + 1}. {toDoTask}</div>
       ):(
       <>
         <input onChange={e => handleChange(e)} value={task}></input><button 

@@ -14,6 +14,7 @@ const ToDoForm = (props) => {
   const handleClick = (e) => {
     e.preventDefault()
     addToDo(newToDo)
+    setNewToDo('')
   }
 
   return (

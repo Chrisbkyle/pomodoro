@@ -19,6 +19,7 @@ export const PomoProvider = ({children}) => {
             payload: oldObject
         })
     }
+
     //Add Task to currentToDo
     function addToDo(prop) {
         const newEntry = {task: prop, stage: 'Ready to Start'};
@@ -30,14 +31,15 @@ export const PomoProvider = ({children}) => {
             payload: newObject['currentToDo']
         })
     }
+    
     //Edit ToDo Item task
-    function editTodoItem(index, task, stage) {
+    function editTodoItem(index, task) {
+        //Edit Item within Array
         let toDoList = state.currentToDo;
-        toDoList[index] = {task: task, stage: stage}
+        toDoList[index].task = task 
+        //Edit State object with new array
         let newObject = state;
         newObject['currentToDo'] = toDoList
-    
-        console.log(newObject)
 
         dispatch({
             type: "EDIT_TODO_ITEM",

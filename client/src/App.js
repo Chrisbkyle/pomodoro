@@ -8,6 +8,7 @@ import Title from './components/Title';
 import ToDoForm from './components/ToDoForm';
 import ToDoList from './components/ToDoList';
 import TomatoTimer from './components/TomatoTimer';
+import TimerSettings from './components/TimerSettings';
 
 
 
@@ -16,9 +17,11 @@ function App() {
     <div className="App">
       <PomoProvider>
         {/* <SignupForm /> */}
-        <LoginForm />
+        {/* <LoginForm />
         <ToDoList />
-        <ToDoForm />
+        <ToDoForm /> */}
+        <TomatoTimer />
+        <TimerSettings />
       </PomoProvider>
     </div>
   );
