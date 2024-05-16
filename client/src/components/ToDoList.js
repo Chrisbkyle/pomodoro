@@ -1,34 +1,39 @@
 import React, {useState, useEffect} from "react"
 import usePomo from "./PomoContext";
+import ToDoItem from "./ToDoItem";
 
 const ToDoList = (props) => {
 
-  const {user} = usePomo()
+  const {user, currentToDo} = usePomo()
 
-  let [state, setState] = useState([])
+  let [previousToDo, setPreviousToDo] = useState([])
+  let [current, setCurrent] = useState([])
 
   useEffect(() => {
-    setState(user.previousToDo)
-  })
+    setPreviousToDo(user.previousToDo)
+    setCurrent(currentToDo)
+  }, [current])
 
   console.log(usePomo())
 
   const handleClick = () => {
-    console.log(state)
+    console.log(currentToDo)
   }
   return (
     <div>
-        <ul>
-          {state.map((e, index) => {
-            return(
-              <>
-                <div>{index + 1}. {e}</div>
-              </>)
-            
-          })}
-          {/* <li>{user.user}</li> */}
-          <button onClick={e => handleClick(e)}>Click</button>
-        </ul>
+      <h3>Current ToDo</h3>
+        {currentToDo.map((e, index) => (
+            <ToDoItem index={index} task={e.task} stage={e.stage} />
+        ))}
+      <h3>Previous ToDo</h3>
+        {/* {previousToDo.map((e, index) => {
+          return( */}
+            {/* <ToDoItem index={index + 1} task={e.task} stage={e.stage} /> */}
+          {/* )
+          
+        })} */}
+        {/* <li>{user.user}</li> */}
+        <button onClick={e => handleClick(e)}>Click</button>
     </div>
   )
 };

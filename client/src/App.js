@@ -18,6 +18,7 @@ function App() {
         {/* <SignupForm /> */}
         <LoginForm />
         <ToDoList />
+        <ToDoForm />
       </PomoProvider>
     </div>
   );

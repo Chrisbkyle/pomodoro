@@ -4,7 +4,8 @@ export const initialState = {
         email: '',
         currentToDo: [],
         previousToDo: []
-    }
+    },
+    currentToDo: []
 }
 
 const pomoReducer = (state, action) => {
@@ -16,6 +17,18 @@ const pomoReducer = (state, action) => {
             return{
                 ...state,
                 user: payload
+            }
+        case "UPDATE_TODO" :
+            console.log("UPDATE_TODO", payload);
+            return{
+                ...state,
+                currentToDo: payload
+            }
+        case "EDIT_TODO_ITEM" :
+            console.log("EDIT_TODO_ITEM", payload)
+            return{
+                ...state,
+                currentToDo: payload
             }
     }
 }

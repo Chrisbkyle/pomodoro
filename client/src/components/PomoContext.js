@@ -6,36 +6,55 @@ const PomoContext = createContext(initialState);
 export const PomoProvider = ({children}) => {
     const [state, dispatch] = useReducer(pomoReducer, initialState)
 
-    function displayUser(prop) {
-        const {username, email, previousToDo} = prop
-            // state.user = prop.username,
-            // state.email = prop.email,
-            // state.previousToDo = prop.previousTodo
-        const activeUser = {
-            user: username,
-            email: email,
-            previousToDo: previousToDo
+
+    //Log user Data from DB after Login
+    async function displayUser(prop) {
+        const newObject = await prop
+        const oldObject = state.user
+        for (const[key, value] of Object.entries(newObject)) {
+            oldObject[key] = value
         }
-
-        // const activeUser = state.user
-        // console.log(activeUser)
-
         dispatch({
             type: "USER_LOGGED_IN",
-            payload: activeUser
+            payload: oldObject
+        })
+    }
+    //Add Task to currentToDo
+    function addToDo(prop) {
+        const newEntry = {task: prop, stage: 'Ready to Start'};
+        let newObject = state
+        newObject['currentToDo'].push(newEntry)
+
+        dispatch({
+            type: "UPDATE_TODO",
+            payload: newObject['currentToDo']
+        })
+    }
+    //Edit ToDo Item task
+    function editTodoItem(index, task, stage) {
+        let toDoList = state.currentToDo;
+        toDoList[index] = {task: task, stage: stage}
+        let newObject = state;
+        newObject['currentToDo'] = toDoList
+    
+        console.log(newObject)
+
+        dispatch({
+            type: "EDIT_TODO_ITEM",
+            payload: newObject['currentToDo']
         })
     }
 
 
     const value = {
         user: state.user,
-        displayUser
+        currentToDo: state.currentToDo,
+        displayUser,
+        addToDo,
+        editTodoItem
     }
 
-    // console.log(value)
-
     return <PomoContext.Provider value={value}>{children}</PomoContext.Provider>
-
 
 }
 
