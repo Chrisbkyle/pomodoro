@@ -5,7 +5,8 @@ export const initialState = {
         currentToDo: [],
         previousToDo: []
     },
-    currentToDo: []
+    currentToDo: [],
+    timer: 0,
 }
 
 const pomoReducer = (state, action) => {
@@ -30,6 +31,12 @@ const pomoReducer = (state, action) => {
                 ...state,
                 currentToDo: payload
             }
+        case "SET_TIMER" :
+            console.log("SET_TIMER", payload)
+            return{
+                ...state,
+                timer: 0
+            } 
     }
 }
 
