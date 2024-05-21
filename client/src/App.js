@@ -16,10 +16,11 @@ function App() {
   return (
     <div className="App">
       <PomoProvider>
-        {/* <SignupForm /> */}
-        {/* <LoginForm />
+        <Title />
+        <SignupForm />
+        <LoginForm />
         <ToDoList />
-        <ToDoForm /> */}
+        <ToDoForm />
         <TomatoTimer />
         <TimerSettings />
       </PomoProvider>

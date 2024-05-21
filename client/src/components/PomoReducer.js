@@ -6,7 +6,12 @@ export const initialState = {
         previousToDo: []
     },
     currentToDo: [],
-    timer: 0,
+    timer: {
+        pomodoro: 2,
+        shortBreak: 2,
+        longBreak: 2,
+        timerCount: 1 
+    },
 }
 
 const pomoReducer = (state, action) => {
@@ -35,8 +40,14 @@ const pomoReducer = (state, action) => {
             console.log("SET_TIMER", payload)
             return{
                 ...state,
-                timer: 0
+                timer: payload
             } 
+        case "INCREMENT_TIMER" :
+            console.log("INCREMENT_TIMER", payload)
+            return{
+                ...state,
+                timer: payload
+            }
     }
 }
 

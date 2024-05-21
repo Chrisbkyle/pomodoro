@@ -5,7 +5,7 @@ const SignupForm = (props) => {
 
     const api = 'http://localhost:3001/api'
     const [userData, setUserData] = useState({username: '', password: '', confirmPassword: '', email: ''})
-    const [errorMessage, setErrorMessage] = useState
+    const [errorMessage, setErrorMessage] = useState()
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -18,7 +18,7 @@ const SignupForm = (props) => {
                     console.log(res.data)
                 }
             }).catch(err => {
-                setErrorMessage(err.response.data)
+                // setErrorMessage(err.response.data)
                 console.log(err.data)
             })
         } else {
@@ -28,12 +28,8 @@ const SignupForm = (props) => {
     }
     const handleChange = (e) => {
         let data = {...userData}
-        console.log(data)
         data[e.target.name] = e.target.value
-        setUserData(
-            data
-        )
-        console.log(userData)
+        setUserData(data)
     }
   return (
     <div>

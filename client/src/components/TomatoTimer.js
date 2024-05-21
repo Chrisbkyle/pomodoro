@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react"
+import usePomo from "./PomoContext";
 
 const twoDigits = (num, digit) => {
   num = `${num}`
@@ -8,36 +9,50 @@ const twoDigits = (num, digit) => {
   return num
 }
 
-const TomatoTimer = (props) => {
+const TomatoTimer = () => {
 
-
-  const [time, setTime] = useState(965);
-  const [seconds, setSeconds] = useState(twoDigits(time % 60, 2));
-  const [minutes, setMinutes] = useState(Math.floor(time / 60));
+  const {timer, setTimer, incrementTimerCount} = usePomo();
+  const [mode, setMode] = useState();
+  const [remainingSeconds, setRemainingSeconds] = useState(timer[mode])
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
+    if(isActive){    
+      if (remainingSeconds == 0) {
+        console.log('triggered')
+        setIsActive(false)
+        incrementTimerCount()
+      }
     const id = setInterval(() => {
-      if(!isActive || time <= 0) return;
-      setTime(time - 1)
+      console.log(remainingSeconds)
+      if(!isActive || remainingSeconds <= 0) return;
+      setRemainingSeconds(remainingSeconds - 1)
     }, 1000);
     
     return () => clearInterval(id);
-  }, [time, isActive]);
+  }}, [remainingSeconds, isActive]);
+
+  useEffect(() => {
+    setRemainingSeconds(timer[mode])
+    if (timer.timerCount % 2 === 1 && timer.timerCount <= 7) {
+      setMode('pomodoro')
+    } else if (timer.timerCount % 2 === 0 && timer.timerCount <= 7) {
+      setMode('shortBreak')
+    } else {
+      setMode('longBreak')
+    }
+  }, [timer[mode], isActive])
 
 
-
-  useEffect(() => { 
-
-    setMinutes(Math.floor(time / 60))
-    setSeconds(twoDigits(time % 60, 2))
-    
-    console.log(minutes, seconds)
-  }, [time])
-
-
-const toggleIsActive = () => {
+const startOrFinish = () => {
   !isActive ? setIsActive(true) : setIsActive(false)
+}
+const timerRender = () => {
+  const seconds = twoDigits(remainingSeconds % 60, 2);
+  const minutes = Math.floor(remainingSeconds / 60);
+  if(seconds) {
+    return <div>{minutes}: {seconds} {mode}</div>
+  }
 }
 
   //pomodoro timer breakdown
@@ -52,8 +67,9 @@ const toggleIsActive = () => {
 
   return (
     <div>
-      <div>{minutes}: {seconds}</div>
-      <button onClick={() => toggleIsActive()}>Timer Button</button>
+      <div>{timerRender()}</div>
+      <button onClick={() => startOrFinish()}>{isActive ? 'Finish' : 'Start'}</button>
+      <button onClick={() => setIsActive(false)}>Pause</button>
     </div>
   )
 };

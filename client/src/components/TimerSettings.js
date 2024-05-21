@@ -1,12 +1,18 @@
 import React, {useState} from "react"
+import usePomo from "./PomoContext";
 
 const TimerSettings = (props) => {
 
-
+    const {setTimer} = usePomo();
     const [isTraditonal, setIsTraditional] = useState();
-    const [focusTime, setFocusTime] = useState();
+    const [focusTime, setFocusTime] = useState(5 *  60);
     const [shortBreak, setShortBreak] = useState();
     const [longBreak, setLongBreak] = useState();
+    const [timerConfig, setTimerConfig] = useState({
+        pomodoroTime: 5 * 60,
+        shortBreak: 5 * 60,
+        longBreak: 5 * 60,
+   })
     const timeOptions = [5,10,15,20,25,30,35,40,45,50,55,60]
 
     const handleFocusSet = (e) => {
@@ -22,6 +28,10 @@ const TimerSettings = (props) => {
     const handleLongBreak = (e) => {
         setLongBreak(e.target.value * 60)
         console.log(e.target.value * 60)
+    }
+
+    const handleChange = (e) => {
+
     }
 
     const handleRadio = (e) => {
@@ -40,7 +50,7 @@ const TimerSettings = (props) => {
             </div>
             <div>
                 <label>Focus Time </label>
-                <select size='1.5' onChange={e => handleFocusSet(e)}>
+                <select name='pomodoroTime' size='1.5' onChange={e => setTimer(e.target.value * 60)}>
                     {timeOptions.map((e) => (
                         <option value={e}>{e}</option>
                     ))}
@@ -48,7 +58,7 @@ const TimerSettings = (props) => {
             </div>
             <div>
                 <label>Short Break</label>
-                <select size='1'onChange={e => handleShortBreak(e)}>
+                <select name='shortBreak' size='1'onChange={e => handleShortBreak(e)}>
                     {timeOptions.map((e) => (
                         e <= 20 ? <option value={e}>{e}</option> : undefined
                     ))}
@@ -56,7 +66,7 @@ const TimerSettings = (props) => {
             </div>
             <div>
                 <label>Long Break</label>
-                <select size='1'onChange={e => handleLongBreak(e)}>
+                <select name='longBreak' size='1'onChange={e => handleLongBreak(e)}>
                     {timeOptions.map((e) => (
                         e >= 20 ? <option value={e}>{e}</option> : undefined
                     ))}
