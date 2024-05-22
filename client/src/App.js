@@ -23,6 +23,7 @@ function App() {
         <ToDoForm />
         <TomatoTimer />
         <TimerSettings />
+        <Description />
       </PomoProvider>
     </div>
   );

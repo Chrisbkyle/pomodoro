@@ -8,7 +8,9 @@ const SignupForm = (props) => {
     const [errorMessage, setErrorMessage] = useState()
 
     const handleSubmit = (e) => {
+
         e.preventDefault();
+
         if (userData.password === userData.confirmPassword) {
             axios.post(api + '/add', userData)
             .then(res => {
@@ -18,7 +20,7 @@ const SignupForm = (props) => {
                     console.log(res.data)
                 }
             }).catch(err => {
-                // setErrorMessage(err.response.data)
+                setErrorMessage(err.response.data)
                 console.log(err.data)
             })
         } else {
@@ -26,17 +28,20 @@ const SignupForm = (props) => {
             console.log('passwords don\'t match')
         }
     }
+
     const handleChange = (e) => {
         let data = {...userData}
         data[e.target.name] = e.target.value
         setUserData(data)
     }
+
   return (
     <div>
       <form>
         <label name='username'>
             <input 
             name='username' 
+            type='text'
             value={userData.username} 
             onChange={e => handleChange(e)}
             placeholder='Enter Username'
@@ -44,7 +49,8 @@ const SignupForm = (props) => {
         </label>
         <label name='password'>
             <input 
-            name='password' 
+            name='password'
+            type='password' 
             value={userData.password} 
             onChange={e => handleChange(e)}
             placeholder='Choose a Password'
@@ -52,7 +58,8 @@ const SignupForm = (props) => {
         </label>
         <label name='confirmPassword'>
             <input 
-            name='confirmPassword' 
+            name='confirmPassword'
+            type='password' 
             value={userData.confirmPassword}
             onChange={e => handleChange(e)}
             placeholder='Confirm Password'
@@ -61,6 +68,7 @@ const SignupForm = (props) => {
         <label name='email'>
             <input 
             name='email' 
+            type='email'
             value={userData.email} 
             onChange={e => handleChange(e)}
             placeholder='Email'

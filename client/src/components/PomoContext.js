@@ -35,11 +35,10 @@ export const PomoProvider = ({children}) => {
     //Edit ToDo Item task
     function editTodoItem(index, task) {
 
-        //Edit Item within Array
         let toDoList = state.currentToDo;
-        toDoList[index].task = task 
-        //Edit State object with new array
         let newObject = state;
+        
+        toDoList[index].task = task 
         newObject['currentToDo'] = toDoList
 
         dispatch({
@@ -50,29 +49,29 @@ export const PomoProvider = ({children}) => {
 
     //Set Focus and Break Time
     function setTimer(time, mode) {
-        console.log(time)
+
         let newTime = +time
         let newState = state.timer
+
         newState[mode] = newTime
-        console.log(newState)
         dispatch({
             type: "SET_TIMER",
             payload: newState
         })
-
     }
+
+    //Increase Timer Count by 1 when timer is finished
     function incrementTimerCount() {
+
         let newTimerCount = state.timer.timerCount
-        newTimerCount++
         let newObject = state.timer
-        console.log(newTimerCount)
-        newObject.timerCount = newTimerCount
+
+        newObject.timerCount = newTimerCount + 1
 
         dispatch({
-            type: "INCREMENT_TIMER",
+            type: "INCREMENT_TIMER_COUNT",
             payload: newObject
         })
-
     }
 
 

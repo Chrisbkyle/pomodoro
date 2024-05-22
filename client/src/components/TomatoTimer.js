@@ -11,31 +11,38 @@ const twoDigits = (num, digit) => {
 
 const TomatoTimer = () => {
 
-  const {timer, setTimer, incrementTimerCount} = usePomo();
+  const {timer, incrementTimerCount} = usePomo();
   const [mode, setMode] = useState();
   const [remainingSeconds, setRemainingSeconds] = useState(timer[mode])
   const [isActive, setIsActive] = useState(false);
 
+
+  //Timer Countdown
   useEffect(() => {
     if(isActive){    
+      
+      //When timer counts to 0 timercount increases by 1
       if (remainingSeconds == 0) {
-        console.log('triggered')
-        setIsActive(false)
-        incrementTimerCount()
+        setTimeout(() => {
+          setIsActive(false)
+          incrementTimerCount()
+        }, 1000)
       }
+      //Code for countdown Timer when isActive
     const id = setInterval(() => {
-      console.log(remainingSeconds)
       if(!isActive || remainingSeconds <= 0) return;
       setRemainingSeconds(remainingSeconds - 1)
     }, 1000);
-    
+    //Pause Timer when !isActive
     return () => clearInterval(id);
   }}, [remainingSeconds, isActive]);
 
+
+  //Set Timer Mode based on TimerCount held in state
   useEffect(() => {
     setRemainingSeconds(timer[mode])
     if (timer.timerCount % 2 === 1 && timer.timerCount <= 7) {
-      setMode('pomodoro')
+      setMode('pomodoroTime')
     } else if (timer.timerCount % 2 === 0 && timer.timerCount <= 7) {
       setMode('shortBreak')
     } else {
