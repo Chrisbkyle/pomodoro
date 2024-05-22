@@ -31,8 +31,8 @@ const ToDoItem = ({index, task, stage}) => {
     edit ? setEdit(false) : setEdit(true)
    }
 
-   const handleDoubleClick = (e) => {
-    console.log('you double clicked')
+   const handleClick = (e) => {
+    console.log('task', task)
    }
 
   const handleChange = (e) => {

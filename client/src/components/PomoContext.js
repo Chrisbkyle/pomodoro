@@ -7,7 +7,17 @@ export const PomoProvider = ({children}) => {
     const [state, dispatch] = useReducer(pomoReducer, initialState)
 
 
+
     //Log user Data from DB after Login
+    function loginToggle(bool) {
+        console.log('bool', bool)
+        const newLoginStatus = bool
+        
+        dispatch({
+            type: "LOGIN_TOGGLE",
+            payload: newLoginStatus
+        })
+    }
     async function displayUser(prop) {
         const newObject = await prop
         const oldObject = state.user
@@ -79,6 +89,8 @@ export const PomoProvider = ({children}) => {
         user: state.user,
         currentToDo: state.currentToDo,
         timer: state.timer,
+        isLoggedIn: state.isLoggedIn,
+        loginToggle,
         incrementTimerCount,
         setTimer,
         displayUser,

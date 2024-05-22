@@ -4,7 +4,7 @@ import usePomo from "./PomoContext";
 
 const LoginForm = (props) => {
 
-  const {displayUser} = usePomo()
+  const {displayUser, loginToggle} = usePomo()
 
   const api = 'http://localhost:3001/api'
   const [loginReq, setLoginReq] = useState({username: '', password: ''})
@@ -25,6 +25,7 @@ const LoginForm = (props) => {
       console.log(res.data)
       setActiveUser(res.data.username)
       displayUser(res.data)
+      loginToggle(true)
     }).catch(err => {
       // setErrorMessage(err.response)
       console.log(err.response)

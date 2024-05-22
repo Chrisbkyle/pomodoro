@@ -1,8 +1,8 @@
 export const initialState = {
+    isLoggedIn: false,
     user: {
         username: '',
         email: '',
-        currentToDo: [],
         previousToDo: []
     },
     currentToDo: [],
@@ -18,6 +18,12 @@ const pomoReducer = (state, action) => {
     const {type, payload} = action;
 
     switch(type) {
+        case "LOGIN_TOGGLE":
+            console.log("LOGIN_TOGGLE", payload)
+            return{
+                ...state,
+                isLoggedIn: payload
+            }
         case "USER_LOGGED_IN":
             console.log("USER_LOGGED_IN", payload);
             return{
