@@ -6,8 +6,8 @@ const ToDoList = (props) => {
 
   const {user, currentToDo} = usePomo()
 
-  let [previousToDo, setPreviousToDo] = useState([user.previousToDo])
-  let [current, setCurrent] = useState([currentToDo])
+  let [previousToDo, setPreviousToDo] = useState([])
+  let [current, setCurrent] = useState([])
 
   useEffect(() => {
     setPreviousToDo(user.previousToDo)
@@ -15,7 +15,7 @@ const ToDoList = (props) => {
   }, [user.previousToDo, currentToDo])
 
   const handleClick = () => {
-    console.log(user.previousToDo)
+    console.log(previousToDo)
   }
   return (
     <div>

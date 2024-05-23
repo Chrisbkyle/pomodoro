@@ -84,6 +84,23 @@ export const PomoProvider = ({children}) => {
         })
     }
 
+    function logout() {
+        let newUser = {
+            username: '',
+            email: '',
+            previousToDo: []
+        }
+        
+        dispatch({
+            type: "USER_LOG_OUT",
+            payload: {
+                isLoggedIn: false,
+                user: newUser,
+                currentToDo: []
+            }
+        })
+    }
+
 
     const value = {
         user: state.user,
